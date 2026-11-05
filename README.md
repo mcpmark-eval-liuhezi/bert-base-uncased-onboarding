@@ -15,25 +15,25 @@ comparing results.
 
 ## At a glance
 
-| | |
-|---|---|
-| **Hub repo** | [`google-bert/bert-base-uncased`](https://hf.co/google-bert/bert-base-uncased) |
-| **NLP task** | `fill-mask` — masked language modeling (MLM); a bidirectional **encoder**, not a text generator |
-| **Framework** | Ships as a Hugging Face **`transformers`** model (`AutoModelForMaskedLM` / `BertModel`) |
-| **Weight formats** | PyTorch, TensorFlow, JAX (repo is also tagged `rust`, `coreml`, `onnx`, `safetensors`) |
-| **License** | **Apache 2.0** (`apache-2.0`) |
-| **Parameters** | 110M |
-| **Language** | English (`en`) |
-| **Downloads (live, as the Hub reports)** | **3,237.2M** (≈ 3.24 billion) |
-| **Likes (live, as the Hub reports)** | **3,365** |
-| **Hub repo last updated** | 19 Feb 2024 |
+| | | |
+|---|---|---|
+| **Hub repo** | [`google-bert/bert-base-uncased`](https://hf.co/google-bert/bert-base-uncased) | |
+| **NLP task** | `fill-mask` — masked language modeling (MLM); a bidirectional **encoder**, not a text generator | |
+| **Framework** | Ships as a Hugging Face **`transformers`** model (`AutoModelForMaskedLM` / `BertModel`) | |
+| **Weight formats** | PyTorch, TensorFlow, JAX (repo is also tagged `rust`, `coreml`, `onnx`, `safetensors`) | |
+| **License** | **Apache 2.0** (`apache-2.0`) | |
+| **Parameters** | 110M | |
+| **Language** | English (`en`) | |
+| **Downloads (live, as the Hub reports)** | **3,284.0M** (3.284 billion) | |
+| **Likes (live, as the Hub reports)** | **3,060** | |
+| **Hub repo last updated** | 19 Feb 2024 | |
 
 ## What it's built for
 
 BERT is pretrained with a **masked language modeling (MLM)** objective: take a sentence, randomly
-mask 15% of the input words, run the whole masked sentence through the model, and predict the masked
-words. Unlike RNNs or autoregressive models such as GPT, it sees **both left and right context in
-every layer**, so it learns a bidirectional representation. It was also pretrained with **Next
+mask 15% of the input words, run the whole masked sentence through the model, and predict the
+masked words. Unlike RNNs or autoregressive models such as GPT, it sees **both left and right context
+in every layer**, so it learns a bidirectional representation. It was also pretrained with **Next
 Sentence Prediction (NSP)**: given two concatenated sentences, predict whether they were adjacent in
 the original text.
 
@@ -93,8 +93,8 @@ Hugging Face team.
   Documented example from the Hub card: `unmasker("The woman worked as a [MASK].")` returns
   *nurse*, *waitress*, *maid*… among top predictions, while the "man" prompt returns *carpenter*,
   *waiter*, *barber*…
-- **Check for existing fine-tuned versions first** on the
-  [Hub](https://hf.co/models?filter=bert) — for standard tasks someone may have already done the work.
+- **Check for existing fine-tuned versions first** on the [Hub](https://hf.co/models?filter=bert) —
+  for standard tasks someone may have already done the work.
 - **Other variants exist** (base/large × cased/uncased, whole-word masking, multilingual). The full
   release history is in the [google-research/bert README](https://github.com/google-research/bert/blob/master/README.md).
 
