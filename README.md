@@ -1,54 +1,55 @@
-# BERT-base-uncased — Team Model Card
+# BERT base uncased — Onboarding Model Card
 
-> **Audience:** New NLP stack engineers joining Monday.
-> **Source of truth:** every fact below was pulled live from the [Hugging Face Hub](https://hf.co/google-bert/bert-base-uncased) and the [arXiv abstract page](https://arxiv.org/abs/1810.04805) at card-creation time.
+**Source repo:** [google-bert/bert-base-uncased](https://hf.co/google-bert/bert-base-uncased)
+**Facts:** pulled live from the Hugging Face Hub + arXiv abstract page (arXiv:1810.04805) at the time of writing. Downloads and likes are quoted exactly as the Hub reports them — refresh them before citing in a blog post.
 
-## What this model is
+## The one-liner
 
-`google-bert/bert-base-uncased` is a pretrained **Encoder-only BERT base model** (110.1M parameters) built for the **fill-mask** task. It is the **uncased variant** of BERT — it expects lowercased input and applies a thank-you-lowercase preprocessing step internally (it was pretrained on lowercased text, so it cannot recover original casing). For a case-sensitive use case, prefer `bert-base-cased`.
+`google-bert/bert-base-uncased` is **the uncased** BERT encoder checkpoint: a 110.1M-parameter bidirectional Transformer (encoder only) pre-trained on English, for the **fill-mask** task. This card tells you everything a new NLP team member needs to know on day one.
 
-| Fact | Value (as reported by the Hub right now) |
+## What the "uncased" in the name means
+
+This is the **uncased** variant. All input text is lowercased before tokenization, so `BERT` and `bert` are handled identically. Don't confuse it with `bert-base-cased` — pick **uncased** unless you specifically need case sensitivity.
+
+## Core facts (as reported by the Hugging Face Hub right now)
+
+| Field | Value |
 | --- | --- |
-| **Model ID** | `google-bert/bert-base-uncased` |
-| **Task** | `fill-mask` (masked language modeling) |
-| **Framework / library** | `transformers` (PyTorch, TensorFlow, JAX, Rust, CoreML, ONNX, and safetensors checkpoints available) |
+| **NLP task** | `fill-mask` (masked language modeling) — served via `AutoModelForMaskedLM` |
+| **Framework / library** | Hugging Face `transformers` (also ships: PyTorch, TensorFlow, JAX, Rust, CoreML, ONNX, safetensors) |
+| **License** | apache-2.0 |
+| **Pretraining corpora** | BookCorpus + English Wikipedia (`language:en`) |
 | **Parameters** | 110.1M |
-| **Model class** | `AutoModelForMaskedLM` (architecture: `bert`) |
-| **License** | Apache 2.0 (`apache-2.0`) — permissive; commercial use is fine. |
+| **Downloads** | 3,292.5M (~3.29 billion) |
+| **Likes** | 3,067 |
+| **Model class / architecture** | `AutoModelForMaskedLM` / `bert` |
 | **Language** | English (`en`) |
-| **Trained on** | BookCorpus + English Wikipedia (`dataset:bookcorpus`, `dataset:wikipedia`) |
-| **Downloads (live)** | **3,292.5M** (~3.29 billion) |
-| **Likes (live)** | **3,067** |
-| **Last Hub update** | 19 Feb 2024 |
-| **Hub link** | https://hf.co/google-bert/bert-base-uncased |
+| **Last updated on Hub** | 19 Feb 2024 |
+| **Inference** | available via [hf-inference](https://hf.co/playground?modelId=google-bert/bert-base-uncased) playground |
 
-## The paper
+## The paper (arXiv:1810.04805)
 
-- **Title:** *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*
-- **Authors (exact order, per the arXiv abstract page):** Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
-- **What it introduced:** Bidirectional pre-training of the Transformer encoder, jointly conditioning on left and right context in all layers, so a single pre-trained model + one output layer can be fine-tuned for a wide range of NLP tasks.
-- **Why it matters:** New state-of-the-art on **11 NLP tasks** — GLUE score 80.5% (7.7 point absolute improvement), MultiNLI accuracy 86.7%, SQuAD v1.1 Test F1 93.2, SQuAD v2.0 Test F1 83.1.
-- **arXiv:** https://arxiv.org/abs/1810.04805 (v1 submitted 11 Oct 2018; v2 last revised 24 May 2019). DOI: 10.48550/arXiv.1810.04805
+- **Exact title:** *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*
+- **Authors (exact order, from the arXiv abstract page):** Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
+- **arXiv:** [https://arxiv.org/abs/1810.04805](https://arxiv.org/abs/1810.04805) · [v2, submitted 11 Oct 2018, last revised 24 May 2019]
+- **What it did:** bidirectional pre-training of a Transformer encoder on unlabeled text (left + right context in all layers), which can be fine-tuned with just one added output layer for state-of-the-art results across a wide range of tasks — question answering, language inference, and more. It set new SOTA on **eleven** NLP tasks, incl. GLUE 80.5% (7.7-point absolute improvement), MultiNLI 86.7%, SQuAD v1.1 F1 93.2, and SQuAD v2.0 F1 83.1.
+- **Why this model card exists:** BERT is the workhorse of our stack's encoder layer. `bert-base-uncased` is the base-size checkpoint we recommend for most English pretraining/transfer-learning recipes.
 
-## When to use it
-
-✅ Good defaults for: masked-LM pretraining, feature extraction for classification/NER, and as a drop-in starting checkpoint for fine-tuning on downstream tasks with the Hugging Face `transformers` pipeline.
-
-⚠️ **Uncased:** feeds lowercased/subtokenized text; no casing information preserved. Use `bert-base-cased` or `bert-large-uncased` variants if casing matters (POS, NER on capitalized entities, etc.).
-
-⚠️ **110M params:** fine for most productionne creativity — `distilbert-base-uncased` (66M) is the NAS-efficient alternative; `bert-large-uncased` (340M) if you need a deeper encoder.
-
-## Quickstart
+## Quick start (transformers)
 
 ```python
 from transformers import pipeline
 
-classifier = pipeline("fill-mask", model="google-bert/bert-base-uncased")
-print(classifier("The capital of France is [MASK]."))
+# fill-mask = the task this checkpoint was pre-trained for
+masker = pipeline("fill-mask", model="google-bert/bert-base-uncased")
+print(masker("The capital of France is [MASK]."))
 ```
 
-## References
+Then fine-tune on top with `Trainer` / `TFTrainer` for your downstream task.
 
-1. Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2018). *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.* arXiv:1810.04805. https://arxiv.org/abs/1810.04805
-2. Hugging Face Hub model page: https://hf.co/google-bert/bert-base-uncased
-3. Hugging Face transformers docs: https://huggingface.co/docs/transformers
+## Links
+
+- Model page: https://hf.co/google-bert/bert-base-uncased
+- arXiv: https://arxiv.org/abs/1810.04805
+- License: Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+- More checkpoints in the same family: `bert-base-cased`, `bert-large-uncased`, `bert-large-cased`, and their distilled variants (`distilbert-base-uncased`).
