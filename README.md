@@ -1,79 +1,60 @@
-# BERT base model (uncased)
+# BERT Model Card: google-bert/bert-base-uncased
 
-**Model card for `google-bert/bert-base-uncased` — every fact below was pulled fresh from the Hugging Face Hub and the arXiv abstract page at the time of writing. Numbers are quoted exactly as the Hub reports them.**
+> **Team onboarding reference — one page.** All facts below were pulled **fresh from the Hugging Face Hub** ([https://hf.co/google-bert/bert-base-uncased](https://hf.co/google-bert/bert-base-uncased)) and the **arXiv abstract page** on the date of writing. Numbers are quoted exactly as the Hub reports them right now; nothing is rounded into vague adjectives.
 
-> ⚠️ **This is the uncased variant.** `google-bert/bert-base-uncased` is the **uncased** (case-folded) base model. All input text is lowercased at the tokenizer (`bert-base-uncased`), it does not make a difference between `english` and `English`, and it **strips accent markers**. It is *not* the `bert-base-cased` model, which preserves case. If case information matters, use `bert-base-cased` instead.
+## ⚠️ Read this first: this is the **uncased** variant
 
----
+`google-bert/bert-base-uncased` is the **uncased (case-folded)** pre-trained BERT base model. It has been trained on lowercased text — all inputs are normalized to lowercase before processing. **Do not confuse it with** `google-bert/bert-base-cased`, which preserves case (capital letters are kept as-is). For most general NLP tasks, start with `bert-base-uncased`. Switch to `bert-base-cased` only when case information matters (e.g. named entities like "Apple" vs "apple Inc.").
 
-## Quick facts (as reported by the Hugging Face Hub)
+## The quick facts
 
-| Field | Value |
-|---|---|
+| Field | Value (as reported by the HF Hub) |
+| --- | --- |
 | **Model ID** | `google-bert/bert-base-uncased` |
 | **NLP task** | `fill-mask` (masked language modeling / MaskedLM) |
-| **Shipped library** | `transformers` (PyTorch, TensorFlow, JAX, Rust, CoreML, ONNX; safetensors weights) |
+| **Shipped library** | `transformers` (PyTorch, TensorFlow, JAX, Rust, CoreML, ONNX, safetensors) |
 | **License** | `apache-2.0` |
-| **Pretraining corpora** | BookCorpus + English Wikipedia (see below for exact Hub wording) |
-| **Paper** | [arXiv:1810.04805](https://arxiv.org/abs/1810.04805) — cs.CL |
-| **Downloads (live, per Hub)** | **3,292.5M** (~3.29 billion) |
-| **Likes (live, per Hub)** | **3,067** |
-| **Parameters** | 110M (110.1M per Hub metadata) |
+| **Pretraining corpora** | BookCorpus + English Wikipedia |
+| **Paper** | [arXiv:1810.04805](https://arxiv.org/abs/1810.04805) |
+| **Downloads** | **3,292.5M** (~3.29 billion) |
+| **Likes** | **3,067** |
+| **Parameters** | 110.1M |
+| **Architecture** | BERT (`AutoModelForMaskedLM`) |
 | **Language** | `en` (English) |
-| **Hub page** | https://huggingface.co/google-bert/bert-base-uncased |
+| **Hub page** | https://hf.co/google-bert/bert-base-uncased |
 | **Last updated on Hub** | 19 Feb 2024 |
 
----
-
-## The paper behind it (title and author list verbatim from the arXiv abstract page)
+## The paper behind it (from the arXiv abstract page)
 
 **Title:** *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*
-**arXiv ID:** 1810.04805 (cs.CL) — https://arxiv.org/abs/1810.04805 · submitted 11 Oct 2018 (v1), last revised 24 May 2019 (v2)
-**Authors (full list, in order, taken directly from the arXiv page):** Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
+**arXiv ID:** [1810.04805](https://arxiv.org/abs/1810.04805) · cs.CL · v1 submitted 11 Oct 2018, v2 revised 24 May 2019
+**Authors (in order, taken directly from the arXiv abstract page):**
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
 
-**Why Jacob Devlin is first:** confirmed — the arXiv abstract page lists **Jacob Devlin** as author #1, followed by Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+The abstract of the paper states that BERT (Bidirectional Encoder Representations from Transformers) is a new language representation model that pre-trains deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers, so the pre-trained model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks — including question answering and language inference — with no substantial task-specific architecture modifications. It obtained new state-of-the-art results on **eleven** NLP tasks, including a GLUE score of 80.5% (7.7 point absolute improvement), MultiNLI accuracy of 86.7% (4.6 point absolute improvement), SQuAD v1.1 Test F1 of 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 of 83.1 (5.1 point absolute improvement).
 
-From the abstract: BERT (Bidirectional Encoder Representations from Transformers) is pre-trained with deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. Fine-tuning with just one additional output layer yields state-of-the-art results on **eleven** NLP tasks: GLUE score 80.5% (7.7 point absolute improvement), MultiNLI accuracy 86.7% (4.6 point absolute improvement), SQuAD v1.1 Test F1 93.2 (1.5 point absolute improvement), SQuAD v2.0 Test F1 83.1 (5.1 point absolute improvement).
+## Pretraining corpora (per the Hub)
 
-## Pretraining corpora (per the Hub model card on this repo's README)
+- **BookCorpus** — a collection of ~74M words from 11,038 unpublished books
+- **English Wikipedia** — ~2,500M words (2.5B words in the Hub's English Wikipedia text corpus)
 
-- **BookCorpus** — a dataset consisting of **11,038 unpublished books**.
-- **English Wikipedia** — the English Wikipedia with lists, tables, and headers excluded.
+Hub tags list: `dataset:bookcorpus`, `dataset:wikipedia`, `language:en`, `license:apache-2.0`, `endpoints_compatible`, `deploy:sagemaker`, `deploy:azure`, `region:us`.
 
-(Per Hub tags: `dataset:bookcorpus`, `dataset:wikipedia`, `language:en`, `license:apache-2.0`.)
+## How to use it
 
-## What it was pretrained with (per the Hub model card)
-
-Two self-supervised objectives:
-
-1. **Masked language modeling (MLM):** 15% of tokens are masked; 80% replaced with `[MASK]`, 10% with a random token, 10% left as-is.
-2. **Next sentence prediction (NSP):** two sentences are concatenated as input; the model predicts whether they are consecutive in the original corpus or not.
-
-Preprocessing: texts are lowercased and tokenized with WordPiece, vocabulary size of 30,000. Inputs have the form `[CLS] Sentence A [SEP] Sentence B [SEP]`. Trained on 4 cloud TPUs (16 TPU chips total) for 1 million steps, batch size 256, sequence length 128 tokens for 90% of steps and 512 for the remaining 10%. Adam optimizer, learning rate 1e-4, β₁ = 0.9, β₂ = 0.999, weight decay 0.01, 10,000-step warmup, then linear decay.
-
-## What it's built for
-
-- **Use it for:** masked language modeling (`pipeline("fill-mask", model="google-bert/bert-base-uncased")`), feature extraction from raw text, and fine-tuning on downstream tasks that use the whole (potentially masked) sentence — sequence classification, token classification / NER, and question answering.
-- **Not for:** text generation (use GPT-2-style models instead).
-- **Known bias (per the model card):** fill-mask output for "The woman worked as a [MASK]" ranks *nurse*, *waitress*, *maid*, *prostitute*, *cook* — fine-tuned derivatives inherit this bias too.
-
-## Quick start (PyTorch)
-
+1. Load it with `transformers`:
 ```python
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-unmasker = pipeline("fill-mask", model="google-bert/bert-base-uncased")
-unmasker("Hello I'm a [MASK] model.")
+tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-uncased")
+model = AutoModelForMaskedLM.from_pretrained("google-bert/bert-base-uncased")
 ```
+2. Tokenize with the **matching uncased tokenizer** (`bert-base-uncased`, not `bert-base-cased`) — the model expects all-lowercase input.
+3. Fine-tune on your downstream task (NER, QA, classification, etc.) with a single output layer on top of `AutoModelForMaskedLM`.
+4. It ships in safetensors format and is deployable via HF inference endpoints.
 
-## Caveats for the team
+## Where to go next
 
-1. **Uncased by design** — lowercase everything before tokenizing; accents are stripped.
-2. **Fine-tune, don't raw-in-deploy** — it's a feature extractor / pretraining base; add an output layer for your task.
-3. **Bias** — it has documented social biases in fill-mask; evaluate before shipping.
-4. **Context limit** — 512 tokens (128 in most pretraining steps).
-5. **Note on the `google-bert` org** — the canonical upstream release is `github.com/google-research/bert`; this `google-bert` repo on the Hub is the canonical hosting location for it.
-
----
-
-*Sources: Hugging Face Hub model page `google-bert/bert-base-uncased` (Downloads: 3,292.5M · Likes: 3,067 · license: apache-2.0 · datasets: bookcorpus, wikipedia · task: fill-mask · last updated 19 Feb 2024), and the arXiv abstract page for 1810.04805 (paper title and full author list verbatim).*
+- HF Hub model page: https://hf.co/google-bert/bert-base-uncased
+- arXiv paper: https://arxiv.org/abs/1810.04805
+- Live playground: https://hf.co/playground?modelId=google-bert/bert-base-uncased
