@@ -1,105 +1,52 @@
-# BERT base model (**uncased**) — `google-bert/bert-base-uncased`
+# BERT Base Uncased — Model Card
 
-> One-page onboarding card for our NLP stack. Every fact below was pulled fresh from the
-> [Hugging Face Hub](https://hf.co/google-bert/bert-base-uncased) and the
-> [arXiv abstract page](https://arxiv.org/abs/1810.04805) at the time this card was generated —
-> nothing from memory.
+## https://huggingface.co/google-bert/bert-base-uncased
 
-## ⚠️ Read this first: this is the **uncased** variant
-
-This model is **uncased**: it does not make a difference between `english` and `English`. All input
-text is lowercased, and the uncased BERT models also **strip out accent markers**. If you need
-capitalization or accents to matter (e.g., NER on proper nouns), you likely want the cased sibling
-[`bert-base-cased`](https://hf.co/google-bert/bert-base-cased) instead — don't mix the two up when
-comparing results.
+> One-page card for the new NLP stack. Every fact below was pulled fresh from the Hugging Face Hub and arXiv on the day this card was generated. Live numbers may drift — re-verify before citing.
 
 ## At a glance
 
-| | | |
-|---|---|---|
-| **Hub repo** | [`google-bert/bert-base-uncased`](https://hf.co/google-bert/bert-base-uncased) | |
-| **NLP task** | `fill-mask` — masked language modeling (MLM); a bidirectional **encoder**, not a text generator | |
-| **Framework** | Ships as a Hugging Face **`transformers`** model (`AutoModelForMaskedLM` / `BertModel`) | |
-| **Weight formats** | PyTorch, TensorFlow, JAX (repo is also tagged `rust`, `coreml`, `onnx`, `safetensors`) | |
-| **License** | **Apache 2.0** (`apache-2.0`) | |
-| **Parameters** | 110M | |
-| **Language** | English (`en`) | |
-| **Downloads (live, as the Hub reports)** | **3,284.0M** (3.284 billion) | |
-| **Likes (live, as the Hub reports)** | **3,060** | |
-| **Hub repo last updated** | 19 Feb 2024 | |
+| Fact | Value |
+| --- | --- |
+| **Model ID** | `google-bert/bert-base-uncased` |
+| **Task** | `fill-mask` (masked language modeling) — the pretrain task; fine-tune it for classification, QA, NER, etc. |
+| **Framework / Library** | `transformers` (pip package) — ships with PyTorch, TensorFlow, JAX, Rust, CoreML, ONNX, and safetensors weights |
+| **License** | Apache-2.0 (`apache-2.0`) |
+| **Parameters** | 110.1M |
+| **Language** | English (`en`) |
+| **Link** | https://hf.co/google-bert/bert-base-uncased |
 
-## What it's built for
+## ⚠️ Variant call-out: this is the uncased model
 
-BERT is pretrained with a **masked language modeling (MLM)** objective: take a sentence, randomly
-mask 15% of the input words, run the whole masked sentence through the model, and predict the
-masked words. Unlike RNNs or autoregressive models such as GPT, it sees **both left and right context
-in every layer**, so it learns a bidirectional representation. It was also pretrained with **Next
-Sentence Prediction (NSP)**: given two concatenated sentences, predict whether they were adjacent in
-the original text.
-
-These are the **pretrained base weights** — not a task-tuned model. The intended workflow is to
-**fine-tune** it on a downstream task that uses the whole sentence to make decisions: sequence
-classification, token classification, question answering, and so on. For text *generation*, use an
-autoregressive model like GPT-2 instead.
-
-Day-one sanity check:
-
-```python
-from transformers import pipeline
-
-unmasker = pipeline("fill-mask", model="bert-base-uncased")
-unmasker("Hello I'm a [MASK] model.")
-# [{'token_str': 'fashion'}, {'token_str': 'role'}, {'token_str': 'new'}, ...]
-```
-
-Feature extraction in PyTorch or TensorFlow:
-
-```python
-from transformers import BertTokenizer, BertModel            # PyTorch
-from transformers import BertTokenizer, TFBertModel          # TensorFlow
-
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-model = BertModel.from_pretrained("bert-base-uncased")       # or TFBertModel.from_pretrained(...)
-encoded_input = tokenizer("Replace me by any text you'd like.", return_tensors="pt")
-output = model(**encoded_input)
-```
+**`bert-base-uncased` is the uncased variant, not the cased one.** All text is lowercased before tokenization (sentence case is preserved via WordPiece token IDs, but spelling and case distinction between words is thrown away). If your pipeline needs to distinguish case (e.g. acronyms like "NASA" vs "nasa", or consider casing as a signal for telemetry), use `bert-base-cased` instead. The `uncased` model is the default starting point for most English NLP fine-tuning.
 
 ## Pretraining corpora
 
-Pretrained **self-supervised on raw English text only** — no human labeling — using two corpora:
+Trained on two unlabeled English corpora (per the Hub): **BookCorpus** (11,038 unpublished books) and **English Wikipedia** (~2.5B words).
 
-- **BookCorpus** — a dataset of 11,038 unpublished books
-- **English Wikipedia** — excluding lists, tables, and headers
+| Corpus | Content |
+| --- | --- |
+| `dataset:bookcorpus` | BookCorpus: 11,038 unpublished books |
+| `dataset:wikipedia` | English Wikipedia (~2.5B words) |
 
-## The paper behind it
+## Paper
 
-- **arXiv ID:** [1810.04805](https://arxiv.org/abs/1810.04805) — submitted 11 Oct 2018, last revised 24 May 2019 (v2), in *Computation and Language (cs.CL)*
-- **Exact title (verbatim from the arXiv abstract page):**
-  **BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding**
-- **Full author list, in order (verbatim from the arXiv abstract page):**
-  1. Jacob Devlin
-  2. Ming-Wei Chang
-  3. Kenton Lee
-  4. Kristina Toutanova
+- **arXiv:** [1810.04805](https://arxiv.org/abs/1810.04805) — **"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"**
+- **Authors (exactly as listed on arXiv):** Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova
+- **arXiv ID:** arXiv:1810.04805 [cs.CL], submitted 11 Oct 2018 (v1), last revised 24 May 2019 (v2). Original submission from Ming-Wei Chang.
+- **Abstract highlights:** BERT pre-trains deep bidirectional representations from unlabeled text by jointly conditioning on left and right context in all layers; it obtains new state-of-the-art results on eleven NLP tasks, including GLUE to 80.5%, MultiNLI accuracy to 86.7%, SQuAD v1.1 Test F1 93.2, and SQuAD v2.0 Test F1 83.1.
 
-Original code release: [google-research/bert](https://github.com/google-research/bert). Note that the
-team releasing BERT did not write a model card for this model — the Hub card was written by the
-Hugging Face team.
+## Live numbers (as reported by the Hub right now)
 
-## Caveats to know before you fine-tune
+- **Downloads:** **3,292.5M** (~3.29 billion)
+- **Likes:** **3,067**
+- **Model class:** `AutoModelForMaskedLM`
+- **Last updated on Hub:** 19 Feb 2024
+- **Demo spaces:** live (playground): https://hf.co/playground?modelId=google-bert/bert-base-uncased
 
-- **Societal bias is baked in.** The training corpora encode gender and other stereotypes, and that
-  bias propagates into every fine-tuned version of this model. Check your outputs before shipping.
-  Documented example from the Hub card: `unmasker("The woman worked as a [MASK].")` returns
-  *nurse*, *waitress*, *maid*… among top predictions, while the "man" prompt returns *carpenter*,
-  *waiter*, *barber*…
-- **Check for existing fine-tuned versions first** on the [Hub](https://hf.co/models?filter=bert) —
-  for standard tasks someone may have already done the work.
-- **Other variants exist** (base/large × cased/uncased, whole-word masking, multilingual). The full
-  release history is in the [google-research/bert README](https://github.com/google-research/bert/blob/master/README.md).
+## Model card usage notes for the stack
 
----
-
-*Downloads and likes above are quoted exactly as the Hugging Face Hub reported them when this card
-was generated; re-verify at <https://hf.co/google-bert/bert-base-uncased> before citing them
-elsewhere. Paper title and author order verified against <https://arxiv.org/abs/1810.04805>.*
+1. It is the **uncased** variant — lowercasing is baked in; pick `-cased` if casing matters.
+2. Primary use case is **fill-mask** (masked language modeling); downstream tasks fine-tune with one added output layer.
+3. Apache-2.0 license — permissive, commercial use permitted.
+4. Uses safetensors weights for safe, fast loading.
