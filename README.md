@@ -26,7 +26,7 @@
 | **Architecture** | BERT (`bert`), model class `AutoModelForMaskedLM` |
 | **Language** | `en` (English) |
 | **Hub page** | https://hf.co/google-bert/bert-base-uncased |
-| **Hub last updated** | 19 Feb 2024 |
+| **Hub last updated** | 19 Feb, 2024 |
 
 *Verified-live tags on the Hub page: `transformers`, `pytorch`, `tf`, `jax`, `rust`, `coreml`, `onnx`, `safetensors`, `bert`, `fill-mask`, `exbert`, `en`, `dataset:bookcorpus`, `dataset:wikipedia`, `arxiv:1810.04805`, `license:apache-2.0`, `endpoints_compatible`, `deploy:sagemaker`, `deploy:azure`, `region:us`.*
 
