@@ -15,7 +15,7 @@
 | Field | Value |
 | --- | --- |
 | **Model ID** | `google-bert/bert-base-uncased` |
-| **NLP task** | `fill-mask` (masked language modeling / MaskedLm) |
+| **NLP task** | `fill-mask` (masked language modeling / MaskedLM) |
 | **Shipped library / framework** | `transformers` |
 | **License** | `apache-2.0` |
 | **Pretraining corpora** | BookCorpus + English Wikipedia (Hub tags: `dataset:bookcorpus`, `dataset:wikipedia`, `language:en`) |
