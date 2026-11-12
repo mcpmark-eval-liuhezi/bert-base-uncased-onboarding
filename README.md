@@ -15,18 +15,18 @@
 | Field | Value |
 | --- | --- |
 | **Model ID** | `google-bert/bert-base-uncased` |
-| **NLP task** | `fill-mask` (masked language modeling / MaskedLM) |
+| **NLP task** | `fill-mask` (masked language modeling / MaskedLm) |
 | **Shipped library / framework** | `transformers` |
 | **License** | `apache-2.0` |
 | **Pretraining corpora** | BookCorpus + English Wikipedia (Hub tags: `dataset:bookcorpus`, `dataset:wikipedia`, `language:en`) |
 | **Paper** | [arXiv:1810.04805](https://arxiv.org/abs/1810.04805) — "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding" |
-| **Downloads** | **3293.6M** (~3.29 billion, as reported by the Hub right now) |
-| **Likes** | **3070** (as reported by the Hub right now) |
+| **Downloads** | **3,293.6M** (~3.29 billion, as reported by the Hub right now) |
+| **Likes** | **3,070** (as reported by the Hub right now) |
 | **Parameters** | 110.1M |
 | **Architecture** | BERT (`bert`), model class `AutoModelForMaskedLM` |
 | **Language** | `en` (English) |
 | **Hub page** | https://hf.co/google-bert/bert-base-uncased |
-| **Hub last updated** | 19 Feb, 2024 |
+| **Hub last updated** | 19 Feb 2024 |
 
 *Verified-live tags on the Hub page: `transformers`, `pytorch`, `tf`, `jax`, `rust`, `coreml`, `onnx`, `safetensors`, `bert`, `fill-mask`, `exbert`, `en`, `dataset:bookcorpus`, `dataset:wikipedia`, `arxiv:1810.04805`, `license:apache-2.0`, `endpoints_compatible`, `deploy:sagemaker`, `deploy:azure`, `region:us`.*
 
