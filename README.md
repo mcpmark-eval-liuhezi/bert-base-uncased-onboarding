@@ -20,8 +20,8 @@
 | **License** | `apache-2.0` |
 | **Pretraining corpora** | BookCorpus + English Wikipedia (Hub tags: `dataset:bookcorpus`, `dataset:wikipedia`, `language:en`) |
 | **Paper** | [arXiv:1810.04805](https://arxiv.org/abs/1810.04805) — "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding" |
-| **Downloads** | **3,292.5M** (~3.29 billion, as reported by the Hub) |
-| **Likes** | **3,067** (as reported by the Hub) |
+| **Downloads** | **3,293.6M** (~3.29 billion, as reported by the Hub right now) |
+| **Likes** | **3,070** (as reported by the Hub right now) |
 | **Parameters** | 110.1M |
 | **Architecture** | BERT (`bert`), model class `AutoModelForMaskedLM` |
 | **Language** | `en` (English) |
